@@ -153,11 +153,6 @@ body {
   margin: 10px 0; /* Add vertical margin to card text */
 }
 
-.btn {
-    display: inline-block;
-    margin-right: 20px;
-}
-
 .button-style {
     background-color: #264653; /* Background color for the button */
     color: #ffffff; /* Text color */
@@ -167,22 +162,19 @@ body {
     cursor: pointer; /* Cursor style */
     text-decoration: none; /* Remove default underline for links */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
-  }
+    display: inline-block;
+    margin-right: 20px;
+}
   
   /* Hover effect */
-  .button-style:hover {
+.button-style:hover {
     background-color: #2a9d8f; /* Change background color on hover */
-  }
-
-  .button-container {
-    display: inline-block; /* Display the containers inline */
-    margin-right: 10px; /* Add spacing between the containers */
 }
 
 .card-style {
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px; /* Add margin on top of the card */
-  width: 95%; /* Make the card extend to the end of the container */
-  box-sizing: border-box; /* Include padding and border in the total width */
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px; /* Add margin on top of the card */
+    width: 95%; /* Make the card extend to the end of the container */
+    box-sizing: border-box; /* Include padding and border in the total width */
 }
