@@ -169,6 +169,11 @@ body {
     background-color: #2a9d8f; /* Change background color on hover */
   }
 
+  .button-container {
+    display: inline-block; /* Display the containers inline */
+    margin-right: 10px; /* Add spacing between the containers */
+}
+
 .card-style {
   padding: 20px;
   border-radius: 10px;
