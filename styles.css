@@ -157,7 +157,7 @@ body {
     background-color: #264653; /* Background color for the button */
     color: #ffffff; /* Text color */
     border: none; /* Remove border */
-    padding: 4px 9px;
+    padding: 4px 6px;
     border-radius: 1px; /* Rounded corners */
     cursor: pointer; /* Cursor style */
     text-decoration: none; /* Remove default underline for links */
