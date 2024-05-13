@@ -153,6 +153,11 @@ body {
   margin: 10px 0; /* Add vertical margin to card text */
 }
 
+.btn {
+    display: inline-block;
+    margin-right: 20px;
+}
+
 .button-style {
     background-color: #264653; /* Background color for the button */
     color: #ffffff; /* Text color */
