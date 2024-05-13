@@ -157,27 +157,11 @@ body {
   margin-top: 10px; /* Add top margin to buttons */
 }
 
-.card-style {
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px; /* Add margin on top of the card */
-  width: 95%; /* Make the card extend to the end of the container */
-  box-sizing: border-box; /* Include padding and border in the total width */
-}
-
-.button-style{
-  background-color: #584B51;
-  border: none; /* This removes the border */
-  text-align: center; /* Centering content horizontally */
-  color: white; /* Setting text color to contrast with the background */
-}
-
-.btn {
-    display: inline-block;
-    background-color: #264653; /* Button background color */
+.button-style {
+    background-color: #264653; /* Background color for the button */
     color: #ffffff; /* Text color */
-    padding: 10px 20px; /* Padding */
     border: none; /* Remove border */
+    padding: 10px 20px; /* Padding */
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Cursor style */
     text-decoration: none; /* Remove default underline for links */
@@ -185,6 +169,14 @@ body {
   }
   
   /* Hover effect */
-  .btn:hover {
+  .button-style:hover {
     background-color: #2a9d8f; /* Change background color on hover */
   }
+
+.card-style {
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px; /* Add margin on top of the card */
+  width: 95%; /* Make the card extend to the end of the container */
+  box-sizing: border-box; /* Include padding and border in the total width */
+}
