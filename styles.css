@@ -157,7 +157,7 @@ body {
     background-color: #264653; /* Background color for the button */
     color: #ffffff; /* Text color */
     border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 1px; /* Rounded corners */
     cursor: pointer; /* Cursor style */
     text-decoration: none; /* Remove default underline for links */
     transition: background-color 0.3s; /* Smooth transition for hover effect */
