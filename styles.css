@@ -171,3 +171,20 @@ body {
   text-align: center; /* Centering content horizontally */
   color: white; /* Setting text color to contrast with the background */
 }
+
+.btn {
+    display: inline-block;
+    background-color: #264653; /* Button background color */
+    color: #ffffff; /* Text color */
+    padding: 10px 20px; /* Padding */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor style */
+    text-decoration: none; /* Remove default underline for links */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  /* Hover effect */
+  .btn:hover {
+    background-color: #2a9d8f; /* Change background color on hover */
+  }
