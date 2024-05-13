@@ -4,142 +4,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    body {
+      background-color: #8ab17d;
+    }
+  </style>
 </head>
-<style>
-  body {
-    font-family: 'Nunito', sans-serif;
-    background-color:rgb(227, 230, 253);
-    font-size:17px
-  }
-
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px; /* Set the width of the sidebar */
-    height: 100vh; /* Set the height to fill the entire viewport */
-    background-color: rgb(0, 0, 0); /* Sidebar background color */
-    overflow-y: auto; /* Add vertical scroll if content overflows */
-    z-index: 1000;
-}
-
-  .navbar-default .navbar-brand {
-    color: rgb(227, 230, 253); /* Navbar brand text color */
-  }
-
-  .navbar-default .navbar-nav > li > a {
-    color: rgb(227, 230, 253); /* Navbar tab text color */
-  }
-
-  .navbar-default .navbar-nav > .active > a {
-    background-color: rgb(204, 204, 255); /* Active tab background color */
-    color: rgb(0, 0, 0); /* Active tab text color */
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px; /* Set the width of the sidebar */
-    height: 100vh; /* Set the height to fill the entire viewport */
-    background-color: rgb(0, 0, 0); /* Sidebar background color */
-    overflow-y: auto; /* Add vertical scroll if content overflows */
-    z-index: 1000;
-
-    color: rgb(227, 230, 253); /* Sidebar text color */
-    padding: 20px; /* Add some padding to the sidebar */
-    padding-top: 40px; /* Add padding on top of the sidebar */
-  }
-
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li a {
-    display: block;
-    color: rgb(227, 230, 253); /* Inactive link text color */
-    padding: 8px 16px;
-    text-decoration: none;
-  }
-
-  li a.active {
-    background-color: rgb(227, 230, 253);
-    color: black;
-  }
-
-  li a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
-/* Adjust padding for content section */
-.content-section {
-    padding-left: 300px; /* Adjust this value to match the width of your sidebar */
-    padding-top: 40px; /* Make space for the fixed navbar */
-}
-
-/* Remove padding for individual elements within the content */
-.content-section h2,
-.content-section h3,
-.content-section h4,
-.content-section p {
-    padding-left: 0;
-    margin-right: 100px;
-}
-
-  .card-style {
-    border: 1px solid #000;
-    padding: 20px;
-    border-radius: 10px
-  }
-
-  .highlight {
-    background-color: #70AFB0; /* Change this to the color you want */
-    padding: 4px;
-    color: black; /* Change this to the text color you want */
-  }
-
-  /* Adjust styles within the card-body */
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .card-title {
-    margin: 0; /* Remove default margin from card title */
-  }
-
-  .card-text {
-    margin: 10px 0; /* Add vertical margin to card text */
-  }
-
-  .btn {
-    margin-top: 10px; /* Add top margin to buttons */
-  }
-
-  .card-style {
-<!--    border: 2px solid #000;-->
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px; /* Add margin on top of the card */
-    width: 95%; /* Make the card extend to the end of the container */
-    box-sizing: border-box; /* Include padding and border in the total width */
-  }
-
-  .button-style{
-  background-color: #584B51;
-  border: none; /* This removes the border */
-  text-align: center; /* Centering content horizontally */
-  color: white; /* Setting text color to contrast with the background */
-  }
-</style>
-
 <body>
   <div class="container-fluid">
     <div class="row">
