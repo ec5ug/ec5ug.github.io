@@ -179,3 +179,23 @@ body {
     width: 95%; /* Make the card extend to the end of the container */
     box-sizing: border-box; /* Include padding and border in the total width */
 }
+
+body::-webkit-scrollbar {
+    width: 12px;
+    height: 12px; /* For horizontal scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px; /* Rounded corners */
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px; /* Rounded corners */
+    border: 3px solid #f1f1f1; /* Adds space around thumb */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
