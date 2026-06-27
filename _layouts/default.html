@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ page.title }}</title>
+        <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        <header>...</header>
+
+        <div class="navbar">
+            <a href="./">Home</a>
+            <!-- <a href="./my-work.html">Portfolio</a> -->
+            <a href="./assets/docs/chang-CV.pdf">CV</a>
+            <div class="social-icons">
+                <a href="#" onclick='window.open("https://www.linkedin.com/in/emily-chang-ttic/");return false;'><i class="fab fa-linkedin"></i></a>
+                <a  href="#" onclick='window.open("https://github.com/ec5ug");return false;'><i class="fab fa-github"></i></a>
+                <a href="#" onclick='window.open("https://app.thestorygraph.com/profile/starwarskitten");return false;'><i class="fas fa-book"></i></a>
+            </div>
+        </div>
+
+        {{ content }}
+        
+        <footer>...</footer>
+    </body>
+</html>

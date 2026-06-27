@@ -1,0 +1,14 @@
+_site/
+.bundle/
+.idea/
+.jekyll-cache/
+.vscode/
+
+# archived
+img-arch/
+portfolio-arch
+index-arch
+my-work-arch
+navbar-arch
+navbarJS-arch
+styles-arch
