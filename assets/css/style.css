@@ -1,0 +1,95 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+}
+
+a {
+    color: #f4a261;
+}
+
+a:hover {
+    color: #e9c46a;
+}
+
+a:visited {
+    color: #8ab17d;
+}
+
+.navbar {
+    background-color: #264653;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    /* overflow: hidden; */
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+.navbar a {
+    /* float: left; */
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    align-items: center;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.social-icons a {
+    margin-left: 10px; /* Add some space between icons */
+}
+
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #e9c46a;
+    min-width: 160px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    padding: 6px 0;
+    z-index: 100;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 16px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: inherit;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 0 40px;
+}
