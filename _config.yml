@@ -1,4 +1,6 @@
-Title: Emily Chang's Personal Website
+title: Emily Chang's Personal Website
 description: A portfolio and a point of contact
 baseurl: ""
 url: ""
+kramdown:
+  math_engine: mathjax
