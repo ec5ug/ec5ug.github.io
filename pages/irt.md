@@ -165,8 +165,8 @@ Such transformations vary by IRT model; item parameter estimate transformations 
 
 $$
 \begin{flalign}
-    \texttt{new}\rightarrow\texttt{old} &: \hat a^*_{j,\texttt{new}} = \hat a_{j, \texttt{new}} / A \hspace{5em} \hat b_{j, \texttt{new}} = A\hat b_{j, \texttt{new}} + B \\
-    \texttt{old}\rightarrow\texttt{new} &:  \hat a^{\#}_{j, \texttt{old}} = A\hat a_{j, \texttt{old}} \hspace{5.5em} \hat b^{\#}_{j, \texttt{old}} = (\hat b_{j, \texttt{old}} - B)/A
+    \texttt{new}\rightarrow\texttt{old} &: \hat a^*_{j,\texttt{new}} = \frac{\hat a_{j, \texttt{new}}}{A} \hspace{5em} \hat b^*_{j, \texttt{new}} = A\hat b^*_{j, \texttt{new}} + B \\
+    \texttt{old}\rightarrow\texttt{new} &:  \hat a^{\#}_{j, \texttt{old}} = A\hat a_{j, \texttt{old}} \hspace{5.5em} \hat b^{\#}_{j, \texttt{old}} = \frac{\hat b_{j, \texttt{old}} - B}{A}
 \end{flalign}
 $$
 
@@ -180,12 +180,12 @@ $$
 | --------------- | ----------------------------- |
 | $F = F_1 + F_2$ | $F \cong F^* = F_1^* + F_2^*$ |
 | $F_1 = \int_{-\infty}^{+\infty} \left[\hat T(\theta_{\texttt{old}}) - \hat T^*(\theta_{\texttt{old}})\right]^2 \Psi_1(\theta_{\texttt{old}}) d\theta_{\texttt{old}}$ | $F_1^* = \frac{1}{L^*} \sum_{i=1}^{N_{\texttt{old}}} \left[ \hat T(\theta_{i,\texttt{old}}) - \hat T^{\ast}(\theta_{i, \texttt{old}}) \right]^2 W_1(\theta_{i, \texttt{old}})$ |
-| $F_2 = \left[ \hat T(\theta_{\texttt{new}}) - \hat T^{\\#}(\theta_{\texttt{new}}) \right]^2 \psi_2(\theta_{\texttt{new}})d\theta_{\texttt{new}}$ | $F_2^* = \frac{1}{L_2^*} \sum_{i=1}^{N_{\texttt{new}}}\left[\hat T(\theta_{i, \texttt{new}}) - \hat T^{\\#}(\theta_{i, \texttt{new}})\right]^2 W_2(\theta_{i, \texttt{new}})$ |
+| $F_2 = \int_{-\infty}^{+\infty} \left[ \hat T(\theta_{\texttt{new}}) - \hat T^{\\#}(\theta_{\texttt{new}}) \right]^2 \psi_2(\theta_{\texttt{new}})d\theta_{\texttt{new}}$ | $F_2^* = \frac{1}{L_2^*} \sum_{i=1}^{N_{\texttt{new}}}\left[\hat T(\theta_{i, \texttt{new}}) - \hat T^{\\#}(\theta_{i, \texttt{new}})\right]^2 W_2(\theta_{i, \texttt{new}})$ |
 
 $$
 \begin{flalign}
-    \hat T(\theta_{\texttt{old}}) &= \sum_{i=1}^{N_{\texttt{old}}} \sum_{j=1}^M \hat {\mathbb{P}}_{i, \texttt{old}(i)}[\theta_{\texttt{old}}], \hspace{5em} \hat T^{*}(\theta_{\texttt{old}}) = \sum_{i=1}^{N_{\texttt{old}}} \sum_{j=1}^M \hat {\mathbb{P}}_{i, \texttt{old}(i)}[\theta_{\texttt{old}}] \\
-    \hat T(\theta_{\texttt{new}}) &= \sum_{i=1}^{N_{\texttt{new}}}\sum_{j=1}^M \hat{\mathbb{P}}_{i, \texttt{new}(i)}[\theta_{\texttt{new}}], \hspace{5em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{i=1}^{N_{\texttt{new}}} \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{new}(i)}(\theta_{\texttt{new}})
+    \hat T(\theta_{\texttt{old}}) &= \sum_{j=1}^M \hat {\mathbb{P}}_{j, \texttt{old}}[\theta_{\texttt{old}}], \hspace{5em} \hat T^{*}(\theta_{\texttt{old}}) = \sum_{j=1}^M \hat {\mathbb{P}}_{j, \texttt{new}}[\theta_{\texttt{old}}] \\
+    \hat T(\theta_{\texttt{new}}) &= \sum_{j=1}^M \hat{\mathbb{P}}_{j}[\theta_{\texttt{new}}], \hspace{6em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{old}}[\theta_{\texttt{new}}]
 \end{flalign}
 $$
 
