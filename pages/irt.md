@@ -185,7 +185,7 @@ $$
 $$
 \begin{flalign}
     \hat T(\theta_{\texttt{old}}) &= \sum_{i=1}^{N_{\texttt{old}}} \sum_{j=1}^M \hat {\mathbb{P}}_{i, \texttt{old}(i)}[\theta_{\texttt{old}}], \hspace{5em} \hat T^{*}(\theta_{\texttt{old}}) = \sum_{i=1}^{N_{\texttt{old}}} \sum_{j=1}^M \hat {\mathbb{P}}_{i, \texttt{old}(i)}[\theta_{\texttt{old}}] \\
-    \hat T(\theta_{\texttt{new}}) &= \sum_{i=1}^{N_{\texttt{new}}}\sum_{j=1}^M \hat P_{i, \texttt{new}(i)}[\theta_{\texttt{new}}], \hspace{5em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{i=1}^{N_{\texttt{new}}} \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{new}(i)}(\theta_{\texttt{new}})
+    \hat T(\theta_{\texttt{new}}) &= \sum_{i=1}^{N_{\texttt{new}}}\sum_{j=1}^M \hat{\mathbb{P}}_{i, \texttt{new}(i)}[\theta_{\texttt{new}}], \hspace{5em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{i=1}^{N_{\texttt{new}}} \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{new}(i)}(\theta_{\texttt{new}})
 \end{flalign}
 $$
 
