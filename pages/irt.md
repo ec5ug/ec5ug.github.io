@@ -180,7 +180,7 @@ $$
 | --------------- | ----------------------------- |
 | $F = F_1 + F_2$ | $F \cong F^* = F_1^* + F_2^*$ |
 | $F_1 = \int_{-\infty}^{+\infty} \left[\hat T(\theta_{\texttt{old}}) - \hat T^*(\theta_{\texttt{old}})\right]^2 \Psi_1(\theta_{\texttt{old}}) d\theta_{\texttt{old}}$ | $F_1^* = \frac{1}{L^*} \sum_{i=1}^{N_{\texttt{old}}} \left[ \hat T(\theta_{i,\texttt{old}}) - \hat T^{\ast}(\theta_{i, \texttt{old}}) \right]^2 W_1(\theta_{i, \texttt{old}})$ |
-| $F_2 = \left[ \hat T(\theta_{\texttt{new}}) - \hat T^{\\#}(\theta_{\texttt{new}}) \right]^2 \psi_2(\theta_{\texttt{new}})d\theta_{\texttt{new}}$ | $F_2^* = \frac{1}{L_2^*} \sum_{i=1}^{N_{\texttt{new}}}\left[\hat T(\theta_{i, \texttt{new}} - \hat T^{\\#}(\theta_{i, \texttt{new}}))\right]^2 W_2(\theta_{i, \texttt{new}})$ |
+| $F_2 = \left[ \hat T(\theta_{\texttt{new}}) - \hat T^{\\#}(\theta_{\texttt{new}}) \right]^2 \psi_2(\theta_{\texttt{new}})d\theta_{\texttt{new}}$ | $F_2^* = \frac{1}{L_2^*} \sum_{i=1}^{N_{\texttt{new}}}\left[\hat T(\theta_{i, \texttt{new}}) - \hat T^{\\#}(\theta_{i, \texttt{new}})\right]^2 W_2(\theta_{i, \texttt{new}})$ |
 
 $$
 \begin{flalign}
