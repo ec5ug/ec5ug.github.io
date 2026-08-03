@@ -16,6 +16,8 @@ title: IRT
 2. [Models](#models)
 3. [Optimization](#optimization)
 4. [Scale-Linking](#scale-linking)
+5. [Differential Item Functioning](#differential-item-functioning-dif)
+6. [NLP Applications](#nlp-applications)
 
 [Citations](#citations)
 
@@ -128,7 +130,7 @@ $$
 
 ### Motivation
 
-Consider a situation in which two populations of examinee: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. The two "scales" or abilities predicted from these models are **group-dependent** and are not expected to be equivalent unless the ability distributions have the same mean and standard deviations. 
+Consider a situation in which two populations of examinee: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales (<a id="ref-battauz-2017"></a>[Battauz, 2017](#battauz-2017)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](#battauz-2017)).
 
 $$
 \begin{flalign}
@@ -170,7 +172,7 @@ $$
 \end{flalign}
 $$
 
-[Robitzsch (2024)](https://www.mdpi.com/2571-8800/7/3/21) explored asymptotic bias[^1] of the Haebara and Stocking-Lord linking methods for the 2PL IRT model. **The Stocking-Lord linking method had substantial advantages over Haebara linking** in the presence of differential item functioning[^2].
+[Robitzsch (2024)](https://www.mdpi.com/2571-8800/7/3/21) explored asymptotic bias[^1] of the Haebara and Stocking-Lord linking methods for the 2PL IRT model. **The Stocking-Lord linking method had substantial advantages over Haebara linking** in the presence of differential item functioning (described [here](#differential-item-functioning-dif)).
 
 **Haebara method**
 
@@ -189,20 +191,84 @@ $$
 \end{flalign}
 $$
 
+## Differential Item Functioning (DIF)
+
+The success of IRT applications requires satisfactor fit between model and data [(Kang and Chen, 2007)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf). The most critical problem caused by model misfit may be that the hallmark feature of IRT, parameter invariance, no longer applies ([Shepard, Camilli, and Williams, 1984](https://journals.sagepub.com/doi/10.3102/10769986009002093); [Bolt, 2002](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01); [Rupp and Zumbo, 2004](https://journals.sagepub.com/doi/10.1177/0013164403261051)).
+
+DIF is a **violation of the invariance assumption in IRT** and occurs when the probability of a positive response for examinees at the same ability level varies in different groups (e.g. age, ethnicity, gender, education) ([Battauz, 2017](#battauz-2017); <a id="ref-columbia-uni-dif">[Columbia University Mailman School of Public Health, n.d.](#columbia-uni-dif)). 
+
+### DIF Types
+
+|   | Benign DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) | Adverse DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) |
+| - | ---------- | ----------- |
+| groups differ in their probabilities of endorsing at item because ... | the item taps a dimension of the underlying ability between groups | artifactual elements in the measurement process (e.g. different understandings of a word/phrase) |
+| reflects | real group differences in ability | biases in the measurement process |
+
+There are no unambiguous quantitative methods to distinguish benign from adverse DIF [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning). Qualitative methods, such as focus groups, interviews, and careful revies of items by content experts, can minimize the degree of differential item functioning [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning).
+
+### Methods of Quantifying DIF
+
+If the parameter values or item response functions are identical in both populations, then the probabilities of responding to a category are the same and therefore the item is DIF-free [(Wells, 2021)](https://www.cambridge.org/core/books/abs/assessing-measurement-invariance-for-applied-research/methods-based-on-item-response-theory/AF361F6D9AE0D8FC860488D1A7617B49).
+
+*non-DIF aggregate metrics: can be used regardless of similar abilities between examinees.* [Selçuk and Demir, 2024](https://files.eric.ed.gov/fulltext/EJ1440215.pdf) and <a id="ref-weber-et-al-2026"></a>[Weber et al (2026)](#weber-et-al-2026) employed RMSE and/or MAE and had a ground truth estimate of item and (sometimes) model parameters.
+
+$$
+\begin{flalign}
+\text{RMSE} &= \sqrt{\frac{1}{M} \sum_{j=1}^M \left(\hat b_{j, \texttt{old}} - \hat b_{j, \texttt{new}}\right)^2} \\
+\text{MAE} &= \frac{1}{M} \sum_{j=1}^M \left|\hat b_{j, \texttt{old}} - \hat b_{j, \texttt{new}}\right| \\
+& \text{for an arbitrary item parameter (e.g. $b_j$)}
+\end{flalign}
+$$
+
+*DIF per-item metrics. Determines whether item $j$ can be marked as DIF* [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true) compared Lord's $\mathcal{X}^2$, Raju's area measures and the likelihood ratio test on a university mathematics placement test and found that there was close agreement among the three DIF detection procedures. However, Lord's $\mathcal{X}^2$ statistic was more effective at detecting simulated DIF than the two Z-tests of Raju's area [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true). The Z test for the exact signed area was the least effective and was most likely to result in false negative errors [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true).
+
+Lord's $\mathcal{X}^2$ test (Lord, 1980): Note that $^*$ refers to the scale linked version. Formulation follows [Battauz (2017)](#battauz-2017)
+
+$$
+H_0: v_{j, \texttt{old}} = v^*_{j, \texttt{new}} \equiv \begin{pmatrix} a_{j, \texttt{old}} \\ b_{j, \texttt{old}} \\ c_{j, \texttt{old}} \end{pmatrix} = \begin{pmatrix}a^*_{j, \texttt{new}} \\ b^*_{j, \texttt{new}} \\ c^*_{j, \texttt{new}}\end{pmatrix}
+$$
+
+$$
+\mathcal{X}_j^2 = \left(v_{k,\texttt{old}} - v^*_{j,\texttt{new}}\right)^T\left(\Sigma_{j, \texttt{old}}+\Sigma_{j, \texttt{new}}\right)^{-1}\left(v_{j,\texttt{old}}-v_{j, \texttt{new}}\right)
+$$ where $\Sigma_{j, \texttt{old}}$ and $\Sigma_{j, \texttt{new}}$ represent the estimate covariance matrix for $v_{j, \texttt{old}}$ and $v_{j, \texttt{new}}$ respectively.
+
+
 ## Citations
 
-Columbia University Mailman School of Public Health. (n.d.) [Differential Item Functioning](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning)
+<a id="battauz-2017"></a>Battauz (2017). [On Wald Tests for Differential item Functioning Detection](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf) [↩](#ref-battauz-2017)
+
+Bolt. (2002) [A Monte Carlo Comparison of Parametric and Nonparametric Polytomous DIF Detection Methods](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01)
+
+Breslau et al. (2008) [Differential item functioning between ethnic groups in the epidemiological assessment of depression](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/)
+
+<a id="columbia-uni-dif"></a>Columbia University Mailman School of Public Health. (n.d.) [Differential Item Functioning](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning) [↩](#ref-columbia-uni-dif)
 
 Columbia University Mailman School of Public Health. (n.d.). [Item Response Theory](https://www.publichealth.columbia.edu/research/population-health-methods/item-response-theory).
 
 Lord (1980) Applications of item response theory to practical testing problems.
 
+Kang and Chen (2007). [An Investigation of the Performance of the Generalized S-$X^2$ Item-Fit Index for Polytomous IRT Models](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf)
+
+Kim and Cohen (2009). [A Comparison of Lord's Chi-Square, Raju's Area Measures, and the Likelihood Ratio Test on Detection of Differential Item Functioning](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true)
+
 Kim and Lee (2004). [IRT Scale Linking Methods for Mixed-Format Tests](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2004-5.pdf)
 
 Robitzsch (2024). [Bias-reduced Haebara and Stocking-Lord Linking in the Presence of Differential Item Functioning](https://www.mdpi.com/2571-8800/7/3/21)
+
+Raju. (1988) [The area between two item characteristic curves](https://link.springer.com/article/10.1007/BF02294403)
+
+Rupp and Zumbo. (2004) [A note on how to quantify and report whether IRT parameter invariance holds: When Pearson correlations are not enough](https://journals.sagepub.com/doi/10.1177/0013164403261051)
+
+Selçuk and Demir (2024) [Comparison of item response theory ability and item parameters to classical and Bayesian estimation methods](https://files.eric.ed.gov/fulltext/EJ1440215.pdf)
+
+Shepard, Camilli, and Williams, (1984). [Accounting for Statistical Artifacts in Item Bias Research](https://journals.sagepub.com/doi/10.3102/10769986009002093)
+
+<a id="weber-et-al-2026"></a>Weber et al. (2026) [The stability of IRT parameters under several test equating conditions](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1652341/full) [↩](#ref-weber-et-al-2026)
+
+Wells (2021). [Methods Based on Item Response Theory](https://www.cambridge.org/core/books/abs/assessing-measurement-invariance-for-applied-research/methods-based-on-item-response-theory/AF361F6D9AE0D8FC860488D1A7617B49)
 
 Wu et al (2020). [Variational Item Response Theory: Fast, Accurate, and Expressive](https://web.stanford.edu/~cpiech/bio/papers/variationalItemResponseTheory.pdf)
 
 ***
 [^1]: Asymptotic bias refers to the error between an expected statistical estimate and the true population value when the sample size grows infinitely large. 
-[^2]: Differential item functioning occurs when groups (such as defined by gender, ethnicity, age, or education) with the same overall ability have a different chance of answering a test question correctly [(Columbia University Mailman School of Public Health. n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning)
+
