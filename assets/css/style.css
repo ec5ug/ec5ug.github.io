@@ -82,6 +82,7 @@ a:visited {
     white-space: nowrap;
     text-decoration: none;
     color: inherit;
+    text-align: left;
 }
 
 .dropdown-menu a:hover {
