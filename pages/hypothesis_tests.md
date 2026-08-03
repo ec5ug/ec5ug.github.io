@@ -26,7 +26,7 @@ Assuming
 * the sample $n$ approaches $\infty$
 * the null hypothesis lies strictly within the interior of the parameter space
 
-the test statistic $\lambda_{\text{LR}}$ will be asymptotically chi-squared distributed $\mathcal{X}^2$ with degrees of freedom equal to the difference in dimensionality of $Theta$ and $\Theta_0$. 
+the test statistic $\lambda_{\text{LR}}$ will be asymptotically chi-squared distributed $\mathcal{X}^2$ with degrees of freedom equal to the difference in dimensionality of $\Theta$ and $\Theta_0$. 
 
 ## Citations
 

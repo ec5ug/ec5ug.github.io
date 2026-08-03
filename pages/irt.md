@@ -46,7 +46,7 @@ A person's "ability" and an item's parameters are organized on an unobservable c
 1. **Monotonicity**: As the trait level "increases," the probability of a correct response increases.
 2. **Unidimensionality**: There is one dominant latent trait being measured and this trait is the driving force for the responses observed for each item in the measure.
 3. **Local independence**: Responses given to separate items in a test are mutually independent given a certain level of ability.
-4. **Invariance**: We can estimate item parameters fro any position on the item response curve.
+4. **Invariance**: We can estimate item parameters from any position on the item response curve.
 
 ## Models
 ### Unidimensional, Dichotomous
@@ -125,19 +125,19 @@ $$
 | Term | Definition |
 | ---- | ---------- |
 | $A, B$ | (scale) linking coefficients slope and intercept, respectively |
-|$\Psi(\theta_{\texttt{old}}), \Psi(\theta_N)$ | continuous distributions of $\theta_{\texttt{old}}$ and $\theta_N$ respectively |
+|$\Psi(\theta_{\texttt{old}}), \Psi(\theta_{\texttt{new}})$ | continuous distributions of $\theta_{\texttt{old}}$ and $\theta_N$ respectively |
 | $\hat T(\cdot)$ | test characteristic function (an aggregation of item characteristic curves) |
 
 ### Motivation
 
-Consider a situation in which two populations of examinee: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales (<a id="ref-battauz-2017"></a>[Battauz, 2017](#battauz-2017)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](#battauz-2017)).
+Consider a situation in which two populations of examinees: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales (<a id="ref-battauz-2017"></a>[Battauz, 2017](#battauz-2017)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](#battauz-2017)).
 
 $$
 \begin{flalign}
 \theta_{\texttt{old}} &= A\theta_{\texttt{new}} + B && \text{$\theta_{\texttt{old}}$ and $\theta_{\texttt{new}}$ are group dependent but should be linearly related because of invariance assumption (Lord, 1980)}\\
-a_{j, \texttt{old}} &= a_{jN} / A && \text{$j$th item discrimination parameter on old $\theta_{\texttt{old}}$ and new scale $\theta_{\texttt{new}}$} \\
+a_{j, \texttt{old}} &= a_{j, \texttt{new}} / A && \text{$j$th item discrimination parameter on old $\theta_{\texttt{old}}$ and new scale $\theta_{\texttt{new}}$} \\
 b_{j, \texttt{old}} &= Ab_{j, \texttt{new}} + B \\
-c_{j, \texttt{old}} &= c_{jN} && \text{$c_j, d_j$ are independent of ability $\theta$ and are not affected by the linear transformation}\\
+c_{j, \texttt{old}} &= c_{j, \texttt{new}} && \text{$c_j, d_j$ are independent of ability $\theta$ and are not affected by the linear transformation}\\
 d_{j, \texttt{old}} &= d_{j, \texttt{new}} \\
 \end{flalign}
 $$
@@ -193,7 +193,7 @@ $$
 
 ## Differential Item Functioning (DIF)
 
-The success of IRT applications requires satisfactor fit between model and data [(Kang and Chen, 2007)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf). The most critical problem caused by model misfit may be that the hallmark feature of IRT, parameter invariance, no longer applies ([Shepard, Camilli, and Williams, 1984](https://journals.sagepub.com/doi/10.3102/10769986009002093); [Bolt, 2002](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01); [Rupp and Zumbo, 2004](https://journals.sagepub.com/doi/10.1177/0013164403261051)).
+The success of IRT applications requires satisfactory fit between model and data [(Kang and Chen, 2007)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf). The most critical problem caused by model misfit may be that the hallmark feature of IRT, parameter invariance, no longer applies ([Shepard, Camilli, and Williams, 1984](https://journals.sagepub.com/doi/10.3102/10769986009002093); [Bolt, 2002](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01); [Rupp and Zumbo, 2004](https://journals.sagepub.com/doi/10.1177/0013164403261051)).
 
 DIF is a **violation of the invariance assumption in IRT** and occurs when the probability of a positive response for examinees at the same ability level varies in different groups (e.g. age, ethnicity, gender, education) ([Battauz, 2017](#battauz-2017); <a id="ref-columbia-uni-dif">[Columbia University Mailman School of Public Health, n.d.](#columbia-uni-dif)). 
 
