@@ -4,6 +4,8 @@ _site/
 .jekyll-cache/
 .vscode/
 
+pages/super_random_thoughts.txt
+
 # archived
 img-arch/
 portfolio-arch
