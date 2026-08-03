@@ -232,6 +232,7 @@ $$
 \mathcal{X}_j^2 = \left(v_{k,\texttt{old}} - v^*_{j,\texttt{new}}\right)^T\left(\Sigma_{j, \texttt{old}}+\Sigma_{j, \texttt{new}}\right)^{-1}\left(v_{j,\texttt{old}}-v_{j, \texttt{new}}\right)
 $$ where $\Sigma_{j, \texttt{old}}$ and $\Sigma_{j, \texttt{new}}$ represent the estimate covariance matrix for $v_{j, \texttt{old}}$ and $v_{j, \texttt{new}}$ respectively.
 
+## NLP Applications
 
 ## Citations
 
