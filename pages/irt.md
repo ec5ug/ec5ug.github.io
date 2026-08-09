@@ -234,6 +234,13 @@ $$ where $\Sigma_{j, \texttt{old}}$ and $\Sigma_{j, \texttt{new}}$ represent the
 
 ## NLP Applications
 
+[Lalor et al (2016)](https://aclanthology.org/D16-1062.pdf)
+
+[Lalor et al (2020)](https://aclanthology.org/D18-1500.pdf) experimented on Natural Language Inference and Sentiment Analysis to show that the likelihood of answering a question correctly is impacted by the question difficulty. Logistic regression models used training set size and item difficulty as parameters to predict whether a deep neural network would label an item correctly. Performance starts to look more human; as DNNs are trained with more data, "easy" examples are learned more quickly than hard examples.
+
+### Spurious Correlations
+Models can achieve strong results by simply using the hypothesis of a premise-hypothesis pair and ignoring the premise entirely ([Gururangan et al, 2018](https://aclanthology.org/N18-2017.pdf), [Tsuchiya (2018)](https://aclanthology.org/L18-1239.pdf), [Poliak et al (2018)](https://aclanthology.org/S18-2023.pdf))
+
 ## Citations
 
 <a id="battauz-2017"></a>Battauz (2017). [On Wald Tests for Differential item Functioning Detection](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf) [↩](#ref-battauz-2017)
@@ -246,13 +253,21 @@ Breslau et al. (2008) [Differential item functioning between ethnic groups in th
 
 Columbia University Mailman School of Public Health. (n.d.). [Item Response Theory](https://www.publichealth.columbia.edu/research/population-health-methods/item-response-theory).
 
-Lord (1980) Applications of item response theory to practical testing problems.
+Gururangan et al (2018). [Annotation Artifacts in Natural Language Inference Data](https://aclanthology.org/N18-2017.pdf)
 
 Kang and Chen (2007). [An Investigation of the Performance of the Generalized S-$X^2$ Item-Fit Index for Polytomous IRT Models](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf)
 
 Kim and Cohen (2009). [A Comparison of Lord's Chi-Square, Raju's Area Measures, and the Likelihood Ratio Test on Detection of Differential Item Functioning](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true)
 
 Kim and Lee (2004). [IRT Scale Linking Methods for Mixed-Format Tests](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2004-5.pdf)
+
+Lalor et al (2016). [Building an Evaluation Scale using Item Response Theory](https://aclanthology.org/D16-1062.pdf)
+
+Lalor et al (2020). [Understanding Deep Learning Performance through an Examination of Test Set Difficulty: A Psychometric Case Study](https://aclanthology.org/D18-1500.pdf)
+
+Lord (1980) Applications of item response theory to practical testing problems.
+
+Poliak et al (2018). [Hypothesis Only Baselines in Natural Language Inference](https://aclanthology.org/S18-2023.pdf)
 
 Robitzsch (2024). [Bias-reduced Haebara and Stocking-Lord Linking in the Presence of Differential Item Functioning](https://www.mdpi.com/2571-8800/7/3/21)
 
@@ -263,6 +278,8 @@ Rupp and Zumbo. (2004) [A note on how to quantify and report whether IRT paramet
 Selçuk and Demir (2024) [Comparison of item response theory ability and item parameters to classical and Bayesian estimation methods](https://files.eric.ed.gov/fulltext/EJ1440215.pdf)
 
 Shepard, Camilli, and Williams, (1984). [Accounting for Statistical Artifacts in Item Bias Research](https://journals.sagepub.com/doi/10.3102/10769986009002093)
+
+Tsuchiya (2018). [Performance Impact Caused by Hidden Bias of Training Data for Recognizing Textual Entailment](https://aclanthology.org/L18-1239.pdf)
 
 <a id="weber-et-al-2026"></a>Weber et al. (2026) [The stability of IRT parameters under several test equating conditions](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1652341/full) [↩](#ref-weber-et-al-2026)
 
