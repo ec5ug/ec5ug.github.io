@@ -189,7 +189,7 @@ $$
 $$
 \begin{flalign}
     \hat T(\theta_{\texttt{old}}) &= \sum_{j=1}^M \hat {\mathbb{P}}_{j, \texttt{old}}[\theta_{\texttt{old}}], \hspace{5em} \hat T^{*}(\theta_{\texttt{old}}) = \sum_{j=1}^M \hat {\mathbb{P}}_{j, \texttt{new}}[\theta_{\texttt{old}}] \\
-    \hat T(\theta_{\texttt{new}}) &= \sum_{j=1}^M \hat{\mathbb{P}}_{j}[\theta_{\texttt{new}}], \hspace{6em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{old}}[\theta_{\texttt{new}}]
+    \hat T(\theta_{\texttt{new}}) &= \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{new}}[\theta_{\texttt{new}}], \hspace{6em} \hat{T}^{\#}(\theta_{\texttt{new}}) = \sum_{j=1}^M \hat{\mathbb{P}}_{j, \texttt{old}}[\theta_{\texttt{new}}]
 \end{flalign}
 $$
 
