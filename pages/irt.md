@@ -46,7 +46,7 @@ A person's "ability" and an item's parameters are organized on an unobservable c
 1. **Monotonicity**: As the trait level "increases," the probability of a correct response increases.
 2. **Unidimensionality**: There is one dominant latent trait being measured and this trait is the driving force for the responses observed for each item in the measure.
 3. **Local independence**: Responses given to separate items in a test are mutually independent given a certain level of ability.
-4. **Invariance**: We can estimate item parameters from any position on the item response curve.
+4. **Invariance**: We can estimate item parameters from any position on the item response curve. Put another way, invariance means that item parameters do not depend on the characteristics of a particular population. Parameter invariance is crucial if one wants to carefully assess the degree of inferential generalizability across examinee populations; if parameters are not invariant, the statistical foundation for inferences is not identical across populations and hence the inferences are not generalizable across those to the same degree [(Rupp and Zumbo, 2006)](https://journals.sagepub.com/doi/10.1177/0013164404273942).
 
 ## Models
 ### Unidimensional, Dichotomous
@@ -131,6 +131,23 @@ $$
 | $\hat T(\cdot)$ | test characteristic function (an aggregation of item characteristic curves) |
 
 ### Motivation
+
+Aside: Because the latent (ability) scale in IRT model is arbitrary, (unlinked) item and examinee parameters are identical only up to a set of linear transformations listed below (Lord, 1980; [Rupp and Zumbo, 2006](https://journals.sagepub.com/doi/10.1177/0013164404273942)). Let $*$ item and examinee parameters represent "new" parameters Below is an informal proof of equivalence.
+* $\theta^* = A\theta + B$
+* $a^* = a/A$
+* $b^* = Ab+B$
+* $c^* = c$
+
+$$
+\begin{flalign*}
+\mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i, a_j, b_j, c_j] &= c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]} && \text{original item characteristic curve} \\
+\mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i^*, a_j^*, b_j^*, c_j^*] &= c_j^* + (1-c_j^*)\frac{1}{1+\exp[-Da_j^*(\theta_i^* - b_j^*)]} \\
+&= c_j + (1-c_j) \frac{1}{1+\exp\left[-D \frac{a_j}{A}(A(\theta_i+\cancel{B})-(Ab_j-\cancel{B}))\right]} && \text{by substitution} \\
+% &= c_j + (1-c_j) \frac{1}{1+\exp\left[-D \frac{a_j}{\cancel{A}}(\cancel{A}(\theta_i+b_j))\right]} \\
+% &= c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]} \\
+&= \mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i, a_j, b_j, c_j] \\
+\end{flalign*}
+$$
 
 Consider a situation in which two populations of examinees: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales (<a id="ref-battauz-2017"></a>[Battauz, 2017](#battauz-2017)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](#battauz-2017)).
 
@@ -224,7 +241,23 @@ $$
 
 *DIF per-item metrics. Determines whether item $j$ can be marked as DIF* [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true) compared Lord's $\mathcal{X}^2$, Raju's area measures and the likelihood ratio test on a university mathematics placement test and found that there was close agreement among the three DIF detection procedures. However, Lord's $\mathcal{X}^2$ statistic was more effective at detecting simulated DIF than the two Z-tests of Raju's area [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true). The Z test for the exact signed area was the least effective and was most likely to result in false negative errors [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true).
 
-Lord's $\mathcal{X}^2$ test (Lord, 1980): Note that $^*$ refers to the scale linked version. Formulation follows [Battauz (2017)](#battauz-2017)
+*Plotting item parameter drift [(Rupp and Zumbo, 2006)](https://journals.sagepub.com/doi/10.1177/0013164404273942)*:  item parameters drift consitutes a lack of invariance at the individual item level or item set level. When lack of invariance effects are expressed with respect to response probabilities, it appears quite complex because of the curvature and asymptotic behavior of the ICCs.
+
+$$
+\Delta_{ij} = \mathbb{P}_j[\mathbf{r}_{ij}=1|\theta_i, a_j, b_j, c_j, d_j] - \mathbb{P}_j[\mathbf{r}_{ij}=1|\theta_i', a_j', b_j', c_j', d_j']
+$$
+
+It is possible to plot the $\Delta_{ij}$ values to illustrate this complex behavior more closely.
+
+<img 
+    style="display: block; 
+           margin-left: auto;
+           margin-right: auto"
+    src="/assets/imgs/plotting_delta_ij.png"
+    alt="Our logo">
+where $\texttt{Alpha}$ refers to $a_j$, $\texttt{Delta}$ refers to $\Delta_{ij}$, and $\texttt{Theta - Beta}$ refers to $\theta_i - b_j$. This allow researchers to quickly gauge the severity of the lack of invariance effects on the logit and probability scales and from a practical viewpoints, allows one to compute and visualize different lack of invariance effects on response probabilities and examinee true scores.
+
+*Lord's $\mathcal{X}^2$ test (Lord, 1980)*: Note that $^*$ refers to the scale linked version. Formulation follows [Battauz (2017)](#battauz-2017)
 
 $$
 H_0: v_{j, \texttt{old}} = v^*_{j, \texttt{new}} \equiv \begin{pmatrix} a_{j, \texttt{old}} \\ b_{j, \texttt{old}} \\ c_{j, \texttt{old}} \end{pmatrix} = \begin{pmatrix}a^*_{j, \texttt{new}} \\ b^*_{j, \texttt{new}} \\ c^*_{j, \texttt{new}}\end{pmatrix}
@@ -276,6 +309,8 @@ Robitzsch (2024). [Bias-reduced Haebara and Stocking-Lord Linking in the Presenc
 Raju. (1988) [The area between two item characteristic curves](https://link.springer.com/article/10.1007/BF02294403)
 
 Rupp and Zumbo. (2004) [A note on how to quantify and report whether IRT parameter invariance holds: When Pearson correlations are not enough](https://journals.sagepub.com/doi/10.1177/0013164403261051)
+
+Rupp and Zumbo. (2006) [Understanding Parameter Invariance in Unidimensional IRT Models](https://journals.sagepub.com/doi/10.1177/0013164404273942) 
 
 Selçuk and Demir (2024) [Comparison of item response theory ability and item parameters to classical and Bayesian estimation methods](https://files.eric.ed.gov/fulltext/EJ1440215.pdf)
 
