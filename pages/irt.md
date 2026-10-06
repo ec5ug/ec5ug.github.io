@@ -53,30 +53,57 @@ A person's "ability" and an item's parameters are organized on an unobservable c
 
 | Parameter | Formula |
 |-----------|---------|
-| 1PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \| \theta_i, b_j] = \frac{\exp(D(\theta-b_j))}{1+\exp(Da(\theta-b_j))} = \frac{1}{1+\exp[-Da(\theta_i-b_j)]}$ |
-| 2PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \| \theta_i, a_j, b_j] = \frac{\exp(\theta_i-b_j)}{1+\exp[a_j(\theta_i-b_j)]} = \frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
-| 3PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \| \theta_i, a_j, b_j, c_j] = c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
-| 4PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \| \theta_i, a_j, b_j, c_j, d_j] = c_j + (d_j-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
+| 1PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \mid \theta_i, b_j] = \frac{\exp(D(\theta-b_j))}{1+\exp(Da(\theta-b_j))} = \frac{1}{1+\exp[-Da(\theta_i-b_j)]}$ |
+| 2PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \mid \theta_i, a_j, b_j] = \frac{\exp(\theta_i-b_j)}{1+\exp[a_j(\theta_i-b_j)]} = \frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
+| 3PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \mid \theta_i, a_j, b_j, c_j] = c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
+| 4PL       | $\mathbb{P}[\mathbf{r}_{ij}=1 \mid \theta_i, a_j, b_j, c_j, d_j] = c_j + (d_j-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]}$ |
 
 ## Optimization
 
-**Maximum likelihood estimation** picks the most likely ability and item parameters given the observed responses. Subject and item parameters $\theta_i, a_j, b_j, c_j, d_j$ are optimized with gradient descent. While MLE is simple to understand and implement, it lacks any measure of uncertainty and can have important consequences when responses are missing.
+*Notes on Joint Maximum Likelihood, conditional maximum likelihood, and marginal maximum likelihood are pulled from  [Johnson (2007)](https://www.jstatsoft.org/article/view/v020i10)*
 
-$$ \mathcal{L}_{\text{MLE}} = \max_{\{\theta_i\}_{i=1}^N, \{a_i, b_j, c_j, d_j\}_{j=1}^M} \sum_{i=1}^N \sum_{j=1}^M \log \mathbb{P}(\mathbf{r}_{ij}|\theta_i, a_j, b_j, c_j, d_j) $$
+### Joint Maximum Likelihood
+The joint maximum likelihood (JML) estimation procedure treats both item parameters and ability as unknown but fixed model parameters.
 
-$$ \theta_{i} \leftarrow \theta_i + \eta \frac{\partial\mathcal{L}_{\text{MLE}}}{\partial\theta_i}$$
+$$
+\left(\hat a, \hat b, \hat c, \hat d, \hat \theta \right) = \operatorname*{argmax}_{a, b, c, d, \theta} \mathcal{L}(a, b, c, d, \theta \mid \mathbf{R}) = \operatorname*{argmax}_{a, b, c, d, \theta} \prod_{i=1}^N \prod_{j=1}^M \mathbb{P}[\mathbf{r}_{ij}=1 \mid a_j, b_j, c_j, d_j, \theta_i]^{\mathbf{r}_{ij}} \left(1-\mathbb{P}[\mathbf{r}_{ij}=1 \mid a_j, b_j, c_j, d_j, \theta_i]\right)^{1-\mathbf{r}_{ij}}
+$$
 
-$$ a_j \leftarrow a_j + \eta\frac{\partial \mathcal{L}_{\text{MLE}}}{\partial a_j}, b_j \leftarrow b_j + \dots, c_j \leftarrow c_j + \dots, d_j \leftarrow d_j + \dots $$
+A unique solution exists if further constraints are placed on examinee and item parameters. For two parameters like the 2PL, two constraints are necessary
+* a location constraint: constrain a single difficulty to some fixed dumber or the average difficulty to some number
+* a scale constraint: force the product of the discrimination parameters to one $\prod_{j=1}^M a_j=1$.
 
-**Expectation-Maximization**
+Estimates are inconsistent (Neyman and Scott 1948; Andersen 1970; Ghosh 1995 from Marginal Maximum Likelihood Estimation of Item  Response Models in R by Matthew S Johnson); no matter how many individuals are included in the sample, the estimates may still be biased.
 
-**Hamiltonian Monte-Carlo**
+### Conditional Maximum Likelihood
+
+[Andersen (1970)](https://academic.oup.com/jrsssb/article/32/2/283/7027105?login=false) proposed Conditional Maximum Likelihood (CML). This method conditions on the vector of raw scores $\mathbf{R}_{i+} = \sum_j \mathbf{r}\_{ij}$ which is a sufficient statistic and substitute for the abilities of individuals in the sample. 
+
+[Andersen (1970)](https://academic.oup.com/jrsssb/article/32/2/283/7027105?login=false) shows that maximizing the objective below results in consistent item difficulties.
+
+$$
+\hat b = \operatorname*{argmax}_{b} \mathcal{L}(b \mid \mathbf{R}) = \operatorname*{argmax}_{b} \prod_{i=1}^N \mathbb{P}[\mathbf{r}_i \mid b, \mathbf{R}_{i+}] = \frac{\exp\left(-\sum_j \mathbf{r}_{ij} b_j\right)}{\sum_{\{\mathbf{y}\,:\, \sum_j y_j = \mathbf{R}_{i+}\}} \exp\left(-\sum_j y_j b_j\right)}
+$$
+
+Note that this does not depend on the individual's ability $\theta$. An ad hoc procedure must be implemented to estimate the ability of individuals. 
+
+In addition, the conditional maximum likelihood only works when there is a simple sufficient statistic, like the raw score for the Rasch model. More complex IRT models, including the 2 PL, do not have simple sufficient statistics.
+
+### Marginal Maximum Likelihood
+
+Unlike joint maximum likelihood estimation techniques, the marginal maximum likelihood (MML) treats only $N$ individuals as the observational units. To accomplish this, MML assumes that abilities are sampled from some larger distributions denoted as $F(\theta)$. Typically, IRT modelers assume that the distribution F is the normal distribution with mean 0 and standard deviation 1. However the normal distribution does not necessarily work for all applications
+
+$$
+(\hat a, \hat b, \hat c, \hat d) = \operatorname*{argmax}_{a,b,c,d} \mathcal{L}(a, b, c, d \mid \mathbf{R}) = \prod_i \mathbb{P}[\mathbf{r}_{i} \mid a, b, c, d] = \prod_i \int_\theta L_i(\theta_i \mid \mathbf{r}_i, a, b, c, d)dF(\theta_i)
+$$
+
+Like the JML estimation method, location and scale constraints are required to achieve a unique solution. The constraints can either be placed on the means and standard deviation of the ability distribution $F(\theta)$ or on the item parameters.
+
+### Variatonal Inference
 
 [Wu et al. (2020)](https://web.stanford.edu/~cpiech/bio/papers/variationalItemResponseTheory.pdf) proposed **VIBO**, a **variational inference** method for fitting IRT models to large datasets. Applying this method to five large-scale item response datasets from cognitive science and education yields higher log likelihoods and improvements in imputing missing data.
 
 The authors made the assumptions listed below
-
-Assume:
 
 $\theta_i \in \mathbb{R}^{K} : \mathbb{P}[\theta_i] = \prod_{k=1}^K \mathbb{P}[\theta_{i,k}]$ where $\mathbb{P}[\theta_{i,k}] \sim \mathcal{N}(0,1)$
 
@@ -86,15 +113,15 @@ $q_\phi(\\{a_j,b_j,c_j,d_j\\}_{j=1:M} \| \mathbf{r}\_{i,1:M}) = q\_\phi(\\{a_j,b
 
 The goal of VIBO is to pick a family of distribution that "best approximates the true posterior by minimizing an estimate of mismatch between true and approximate distributions." Observed variable $x \in \mathcal{X}$ represents responses from a single student $\mathbf{r}_i$ and latent variables $z \in \mathbf{\mathcal{Z}}$ represents ability and item characteristics $\theta_i, \\{a_j,b_j,c_j,d_j\\}\_{j=1:M}$.
 
-$$q_{\psi^*(x)}(z)=\arg\min_{q_{\psi(x)}} D_{\text{KL}}\big(q_{\psi(x)}(z),|,p(z|x)\big)=\arg\max_{\psi(x)}\mathbb{E}{q_{\psi(x)}(z)}\left[\log\frac{p(x,z)}{q_{\psi(x)}(z)}\right]$$
+$$q_{\psi^*(x)}(z)=\operatorname*{argmin}_{q_{\psi(x)}} D_{\text{KL}}\big(q_{\psi(x)}(z),|,p(z|x)\big)=\operatorname*{argmax}_{\psi(x)}\mathbb{E}{q_{\psi(x)}(z)}\left[\log\frac{p(x,z)}{q_{\psi(x)}(z)}\right]$$
 
-<p style="text-align: center;"><i>by definition: minimixing the KL-divergence to the log posterior is eqivalent to maximizing the ELBO</i></p>
+<p style="text-align: center;"><i>by definition: minimizing the KL-divergence to the log posterior is equivalent to maximizing the ELBO</i></p>
 
 Let $\mathbb{P}_D(x)$ be an empirical distribution over the observed variables. The average quality of the variational approximations is 
 
 $$ \mathbb{E}_{\mathbb{P}_D(x)}\left[\max_{\psi(x)} \mathbb{E}_{q_{\psi(x)}(z)}\left[\frac{\mathbb{P}[x,z]}{q_{\psi(x)}(z)}\right]\right] $$
 
-Learning an approximate posterior for each $x \in D$ can grow to be unweildy in a large dataset. [Wu et al. (2020)](https://web.stanford.edu/~cpiech/bio/papers/variationalItemResponseTheory.pdf) proposed an amortized function $f_\phi$ (parameterimized by $\phi$) that maps a person's responses directly to parameters of their approximate posterior distribution. The number of parameters in amortization is vastly smaller than learning a per-observation posterior.
+Learning an approximate posterior for each $x \in D$ can grow to be unwieldy in a large dataset. [Wu et al. (2020)](https://web.stanford.edu/~cpiech/bio/papers/variationalItemResponseTheory.pdf) proposed an amortized function $f_\phi$ (parameterized by $\phi$) that maps a person's responses directly to parameters of their approximate posterior distribution. The number of parameters in amortization is vastly smaller than learning a per-observation posterior.
 
 $$ \max_\phi \mathbb{E}_{\mathbb{P}_D(x)}\left[\mathbb{E}_{q_\phi(z|x)}\left[\log \frac{\mathbb{P}[x,z]}{q_\phi(z|x)}\right]\right] $$
 
@@ -120,6 +147,12 @@ $$
 \end{flalign}
 $$
 
+### Pseudo-Siamese Neural Estimator
+The Pseudo-Siamese Network for IRT (PSN-IRT) architecture comprises of two independent networks:
+* model network: processes one-hot encoded LLM identifies to estimate model-ability $\theta$
+* item network: processes one-hot encoded item identifiers to produce discrimination $a$, difficulty $b$, guessing $c$, and inattention $d$
+
+
 ## Scale Linking
 
 *The summary below is pulled directly from [Kim and Lee (2004)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2004-5.pdf) unless otherwise stated. The paper extends linkage methods to mixed-format tests (e.g. multiple choice or short essay questions). The documentation below has been modified to account for only dichotomous tests.* **[Kim and Lee (2004)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2004-5.pdf) found that characteristic curve method yield more linking results than moment methods.**
@@ -132,7 +165,7 @@ $$
 
 ### Motivation
 
-Aside: Because the latent (ability) scale in IRT model is arbitrary, (unlinked) item and examinee parameters are identical only up to a set of linear transformations listed below (Lord, 1980; [Rupp and Zumbo, 2006](https://journals.sagepub.com/doi/10.1177/0013164404273942)). Let $*$ item and examinee parameters represent "new" parameters Below is an informal proof of equivalence.
+Aside: Because the latent (ability) scale in IRT model is arbitrary, (unlinked) item and examinee parameters are identical only up to a set of linear transformations listed below (Lord, 1980; [Rupp and Zumbo, 2006](https://journals.sagepub.com/doi/10.1177/0013164404273942)). Let $*$ item and examinee parameters represent "new" parameters. Below is an informal proof of equivalence.
 * $\theta^* = A\theta + B$
 * $a^* = a/A$
 * $b^* = Ab+B$
@@ -143,8 +176,8 @@ $$
 \mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i, a_j, b_j, c_j] &= c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]} && \text{original item characteristic curve} \\
 \mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i^*, a_j^*, b_j^*, c_j^*] &= c_j^* + (1-c_j^*)\frac{1}{1+\exp[-Da_j^*(\theta_i^* - b_j^*)]} \\
 &= c_j + (1-c_j) \frac{1}{1+\exp\left[-D \frac{a_j}{A}(A(\theta_i+\cancel{B})-(Ab_j-\cancel{B}))\right]} && \text{by substitution} \\
-% &= c_j + (1-c_j) \frac{1}{1+\exp\left[-D \frac{a_j}{\cancel{A}}(\cancel{A}(\theta_i+b_j))\right]} \\
-% &= c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]} \\
+&= c_j + (1-c_j) \frac{1}{1+\exp\left[-D \frac{a_j}{\cancel{A}}(\cancel{A}(\theta_i+b_j))\right]} \\
+&= c_j + (1-c_j)\frac{1}{1+\exp[-Da_j(\theta_i-b_j)]} \\
 &= \mathbb{P}[\mathbf{r}_{ij}=1 | \theta_i, a_j, b_j, c_j] \\
 \end{flalign*}
 $$
@@ -269,14 +302,16 @@ $$ where $\Sigma_{j, \texttt{old}}$ and $\Sigma_{j, \texttt{new}}$ represent the
 
 ## NLP Applications
 
-[Lalor et al (2016)](https://aclanthology.org/D16-1062.pdf)
+[Lalor et al (2016)](https://aclanthology.org/D16-1062.pdf) questioned whether all items in a given test set are equal with regards to difficulty and discrimination power. They used Amazon Mechanical Turk works to annotate a sample of the Stanford Natural Language Inference Recognizing Textual Entailment. Researchers demonstrated IRT's application to evaluating NLP systems. They trained an IRT model on human data to compare NLP system performance with the performance in a human population.
 
-[Lalor et al (2020)](https://aclanthology.org/D18-1500.pdf) experimented on Natural Language Inference and Sentiment Analysis to show that the likelihood of answering a question correctly is impacted by the question difficulty. Logistic regression models used training set size and item difficulty as parameters to predict whether a deep neural network would label an item correctly. Performance starts to look more human; as DNNs are trained with more data, "easy" examples are learned more quickly than hard examples.
+[Lalor et al (2020)](https://aclanthology.org/D18-1500.pdf) experimented on Natural Language Inference and Sentiment Analysis to show that the likelihood of answering a question correctly is impacted by the question difficulty. Logistic regression models used training set size and item difficulty as parameters to predict whether a deep neural network would label an item correctly. Neural model performance starts to look more human; as DNNs are trained with more data, "easy" examples are learned more quickly than hard examples.
 
 ### Spurious Correlations
 Models can achieve strong results by simply using the hypothesis of a premise-hypothesis pair and ignoring the premise entirely ([Gururangan et al, 2018](https://aclanthology.org/N18-2017.pdf), [Tsuchiya (2018)](https://aclanthology.org/L18-1239.pdf), [Poliak et al (2018)](https://aclanthology.org/S18-2023.pdf))
 
 ## Citations
+
+Andersen (1970). [Asymptotic Properties pf Conditional Maximum-Likelihood Estimators](https://www.jstor.org/stable/2984535)
 
 <a id="battauz-2017"></a>Battauz (2017). [On Wald Tests for Differential item Functioning Detection](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf) [↩](#ref-battauz-2017)
 
@@ -289,6 +324,8 @@ Breslau et al. (2008) [Differential item functioning between ethnic groups in th
 Columbia University Mailman School of Public Health. (n.d.). [Item Response Theory](https://www.publichealth.columbia.edu/research/population-health-methods/item-response-theory).
 
 Gururangan et al (2018). [Annotation Artifacts in Natural Language Inference Data](https://aclanthology.org/N18-2017.pdf)
+
+Johnson (2007). [Marginal Maximum Likelihood Estimation of Item Response Models in R](https://www.jstatsoft.org/article/view/v020i10).
 
 Kang and Chen (2007). [An Investigation of the Performance of the Generalized S-$X^2$ Item-Fit Index for Polytomous IRT Models](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf)
 
