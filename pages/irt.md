@@ -9,72 +9,6 @@ title: IRT
     }
 </style>
 
-# Benchmarking
-
-## Table of Contents
-1. [Evaluation](#evaluation)
-2. [Problems in the Water](#problems-in-the-water)
-3. Using historical data as a solution
-4. Shrinking the benchmark as a solution
-5. Using dynamic benchmarks as a solution
-
-**benchmark**
-[noun]
-A standard point of reference against which things can be compared. A benchmark consists of dataset(s), metric(s), and a way to aggregate performance.
-
-## Evaluation
-Human evaluation is the gold standard in many NLP tasks but it suffers from prohibitive costs and poor scalability [(Zouhar et al, 2026)](http://arxiv.org/abs/2501.18251). In the absence of human supervision, researchers rely on benchmarking and automated metrics [(Zouhar et al, 2026)](http://arxiv.org/abs/2501.18251). 
-
-It comes to no surprise then dayasets are the telescopes of our field (Joshi); without reliable benchmarks, we are just like "astronomers wanting to see the stars but refusing to build telescopes" (Joshi). AI benchmarks have become the primary instrument for evaluating model capabilities, comparing AI systems, and informing deployment decisions [(Jiang et al, 2026)](?).
-
-## Problems in the Water
-### Inaccurate
-Benchmarks often fail to measure the intended capability. Evaluation quality can degrade due to labelling errors and benchmark saturation.
-
-**Saturation** Recent models have "outpaced the benchmarks [that] test them" [(AI Index Report, 2021)](?). 
-
-<img 
-    style="display: block; 
-           margin-left: auto;
-           margin-right: auto;
-           width: 50%;"
-    src="/assets/imgs/benchmark_saturation.png"
-alt="benchmark saturation">
-Benchmark saturation over time for popular benchmarks. Initial performance and human performance are normalized to -1 and 0, respectively [(Kiela et al, 2021)](?)
-
-**Labelling Errors**
-
-**Reward Hacking**
-
-### Exepnsive
-**Energy** Evaluating generative AI models is a routine but resource-intensive, process that is conducted over and over again during the course of model development [(Fisch et al, 2026)](http://arxiv.org/abs/2607.05046). 
-
-**Data** Benchmarks require so much so much data that it sidelines low-resource languages. Multilingual models are evaluated only on a small subset of languages. There is no guarantee that performance on English-Spanish, the only common evaluation dataset, is representative of the expected performance of the models over all other language pairs [(Anastasopoulos and Neubig, 2020)](?). 
-
-## Citations
-
-AI Index Report (2021). ?
-
-Anastasopoulos and Neubig (2020). ?
-
-Fisch et al (2026). [CollabEval: Statistically Efficient Collaborative Model Evaluation via Matrix Completion](http://arxiv.org/abs/2607.05046)
-
-Jiang et al (2026). ?
-
-Jiela et al (2021). ?
-
-Kiela et al (2021). ?
-
-Zouhar et al (2026). [How to Select Datapoints for Efficient Human Evaluation of NLG Models?](?)
-
-# Using historical data
-The 
-Page 18
-## Citations
-Fisch et al (2026). [CollabEval: Statistically Efficient Collaborative Model Evaluation via Matrix Completion](http://arxiv.org/abs/2607.05046)
-
-# Dynamic Benchmarks
-
 # Item Response Theory
 
 ## Table of Contents
@@ -97,8 +31,10 @@ A person's "ability" and an item's parameters are organized on an unobservable c
 |-------------------|---------------------------------------|
 | $i$               | subject $i$                           |
 | $j$               | item $j$                              |
-| $N$               | number of subjects |
-| $M$               | number of items    |
+| $\ell$            | language $\ell$                       |
+| $N$               | number of subjects                    |
+| $M$               | number of items                       |
+| $L$               | number of languages                   |
 | $a_j$             | (item) discrimination parameter       |
 | $b_j$             | (item) difficulty parameter           |
 | $c_j$             | (item) guessing parameter; the chance of a correct response for a very low $\theta$|
@@ -248,7 +184,7 @@ $$
 \end{flalign*}
 $$
 
-Consider a situation in which two populations of examinees: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales (<a id="ref-battauz-2017"></a>[Battauz, 2017](#battauz-2017)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](#battauz-2017)).
+Consider a situation in which two populations of examinees: $\texttt{old}$ and $\texttt{new}$, take a "test," and their response data is later trained to train two separate IRT models. When item parameters are estimated separately for two groups, item parameters are expressed on different measure scales ([Battauz, 2017](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf)). Before comparing item parameter estimates derived from different groups, it is necessary to "transform" them to obtain values expressed on the same "metric" ([Battauz, 2017](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf)).
 
 $$
 \begin{flalign}
@@ -309,38 +245,13 @@ $$
 \end{flalign}
 $$
 
-## Differential Item Functioning (DIF)
+## Invariance
 
 The success of IRT applications requires satisfactory fit between model and data [(Kang and Chen, 2007)](https://www.act.org/content/dam/act/unsecured/documents/ACT_RR2007-1.pdf). The most critical problem caused by model misfit may be that the hallmark feature of IRT, parameter invariance, no longer applies ([Shepard, Camilli, and Williams, 1984](https://journals.sagepub.com/doi/10.3102/10769986009002093); [Bolt, 2002](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01); [Rupp and Zumbo, 2004](https://journals.sagepub.com/doi/10.1177/0013164403261051)).
 
-DIF is a **violation of the invariance assumption in IRT** and occurs when the probability of a positive response for examinees at the same ability level varies in different groups (e.g. age, ethnicity, gender, education) ([Battauz, 2017](#battauz-2017); <a id="ref-columbia-uni-dif">[Columbia University Mailman School of Public Health, n.d.](#columbia-uni-dif)). 
+### Item Invariance
 
-### DIF Types
-
-|   | Benign DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) | Adverse DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) |
-| - | ---------- | ----------- |
-| groups differ in their probabilities of endorsing at item because ... | the item taps a dimension of the underlying ability between groups | artifactual elements in the measurement process (e.g. different understandings of a word/phrase) |
-| reflects | real group differences in ability | biases in the measurement process |
-
-There are no unambiguous quantitative methods to distinguish benign from adverse DIF [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning). Qualitative methods, such as focus groups, interviews, and careful revies of items by content experts, can minimize the degree of differential item functioning [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning).
-
-### Methods of Quantifying DIF
-
-If the parameter values or item response functions are identical in both populations, then the probabilities of responding to a category are the same and therefore the item is DIF-free [(Wells, 2021)](https://www.cambridge.org/core/books/abs/assessing-measurement-invariance-for-applied-research/methods-based-on-item-response-theory/AF361F6D9AE0D8FC860488D1A7617B49).
-
-*non-DIF aggregate metrics: can be used regardless of similar abilities between examinees.* [Selçuk and Demir, 2024](https://files.eric.ed.gov/fulltext/EJ1440215.pdf) and <a id="ref-weber-et-al-2026"></a>[Weber et al (2026)](#weber-et-al-2026) employed RMSE and/or MAE and had a ground truth estimate of item and (sometimes) model parameters.
-
-$$
-\begin{flalign}
-\text{RMSE} &= \sqrt{\frac{1}{M} \sum_{j=1}^M \left(\hat b_{j, \texttt{old}} - \hat b_{j, \texttt{new}}\right)^2} \\
-\text{MAE} &= \frac{1}{M} \sum_{j=1}^M \left|\hat b_{j, \texttt{old}} - \hat b_{j, \texttt{new}}\right| \\
-& \text{for an arbitrary item parameter (e.g. $b_j$)}
-\end{flalign}
-$$
-
-*DIF per-item metrics. Determines whether item $j$ can be marked as DIF* [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true) compared Lord's $\mathcal{X}^2$, Raju's area measures and the likelihood ratio test on a university mathematics placement test and found that there was close agreement among the three DIF detection procedures. However, Lord's $\mathcal{X}^2$ statistic was more effective at detecting simulated DIF than the two Z-tests of Raju's area [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true). The Z test for the exact signed area was the least effective and was most likely to result in false negative errors [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true).
-
-*Plotting item parameter drift [(Rupp and Zumbo, 2006)](https://journals.sagepub.com/doi/10.1177/0013164404273942)*:  item parameters drift consitutes a lack of invariance at the individual item level or item set level. When lack of invariance effects are expressed with respect to response probabilities, it appears quite complex because of the curvature and asymptotic behavior of the ICCs.
+Item parameters drift consitutes a lack of invariance at the individual item level or item set level. When lack of invariance effects are expressed with respect to response probabilities, it appears quite complex because of the curvature and asymptotic behavior of the ICCs [(Rupp and Zumbo, 2006)](https://journals.sagepub.com/doi/10.1177/0013164404273942).
 
 $$
 \Delta_{ij} = \mathbb{P}_j[\mathbf{r}_{ij}=1|\theta_i, a_j, b_j, c_j, d_j] - \mathbb{P}_j[\mathbf{r}_{ij}=1|\theta_i', a_j', b_j', c_j', d_j']
@@ -356,7 +267,91 @@ It is possible to plot the $\Delta_{ij}$ values to illustrate this complex behav
 alt="plotting delta ij">
 where $\texttt{Alpha}$ refers to $a_j$, $\texttt{Delta}$ refers to $\Delta_{ij}$, and $\texttt{Theta - Beta}$ refers to $\theta_i - b_j$. This allow researchers to quickly gauge the severity of the lack of invariance effects on the logit and probability scales and from a practical viewpoints, allows one to compute and visualize different lack of invariance effects on response probabilities and examinee true scores.
 
-*Lord's $\mathcal{X}^2$ test (Lord, 1980)*: Note that $^*$ refers to the scale linked version. Formulation follows [Battauz (2017)](#battauz-2017)
+### Measurement Invariance (Factorial Invariance)
+
+**Excerpt from the preface of *Statistical Approaches to Measurement Invariance [(Millsap, 2011)](https://www.taylorfrancis.com/books/mono/10.4324/9780203821961/statistical-approaches-measurement-invariance-roger-millsap)*** *The question of bias detection is partially solved...We have no completely general method for detecting bias in psychological measures that work across all of the many measurement conditions encountered in psychology. Instead, we have collection of approaches that apply under specific conditions and assumptions, and that may not function well when these conditions or assumptions are violated. A further problem is that it is usually hard to verify some of the assumptions that are needed in practice for many of the detection methods.*
+
+A test is measurement invariant if examinees with **the same level of the (ability) attribute** have the same expected scores, regardless of the group to which they belong. As a result, any differences in test scores between groups reflect genuine differences in the attribute rather than differences in how the test functions across groups.
+
+**Why does [Millsap (2011)](https://www.taylorfrancis.com/books/mono/10.4324/9780203821961/statistical-approaches-measurement-invariance-roger-millsap) insist on the same level of ability**: Bias in measurement is equivalent to systematic replicable inacurracy. Once the question of bias is raised, trying to answer the question by simply documenting group differences in item scores is **futile**. It may be that all of the following is true
+* the groups do differ systematically on the attribute beain measured
+* the test item yields scores that systematically differ across groups
+* the test is biased
+
+If we consider group differences in item scores in the general population without matching on the attribute being measured, we may encounter systematic group differences in item scores even when the item is unbiased. It is thus essential that we compare individuals from different groups who are "**matched**" on the attribute being measured. (CAVEAT EMPTOR: These two individuals who have been matched on the attribute being measured may still achieve different scores on the test item even when the item is unbiased.)
+
+**Relation to test reliability**: A test that is reliable may, or may not, be biased. An unreliable test may yield unbiased measurement in an average sense across repeated measurement. A biased test may be highly reliable yet may consistently provide inaccuratement even when the average of many repeated measurements is considered.
+
+#### Methods of Quantifying Measurement Invariance (Factorial Invariance)
+
+**Multigroup confirmatory factor analysis (MGCFA)**: To test measurement invariance across groups of participants, researchers commonly use multigroup confirmatory factor analysis (MGCFA). MGCFA first examines whether the factor structure specified by a questionnaire (the number of latent factors and which items belong to each) holds in every group being compared. It then tests whether the groups share more specific measurement properties, such as how strongly each item relates to its factor. To do this, researchers divide the sample into groups (e.g., young adults, middle-aged adults, and older adults) and fit the model to all groups simultaneously, adding equality constraints across groups in successive steps and checking whether model fit worsens. The three typical phases of measurement invariance testing are as follows:
+
+| Step | What gets constrained | Consequences |
+| ---- | --------------------- | ------------ |
+| 1. Configural Invariance | Leave all **factor loadings** (te strength of each scale item-latent factor relationship) and **item intercepts** (each item's origin value) | a good multi-group model fit suggests that the overall factor structure holds up similarly for all groups |
+| 2. Metric Invariance | Constrain the factor loadings to be equivalent across all groups, while still allowing the item intercepts to vary | If constraining the factor loadings results in a poorer fit, factor loadings *may* not be similar across age groups. Validation of metric invariance indicates that each item loads into the specified latent ability factor in a similar manner and with similar magnitude across groups. |
+| 3. Scalar Invariance | Constrain the factor loadings and item intercepts to be equivalent across groups. | If constraining the factor intercepts results in a poorer fit, item intercepts *may* not be similar across groups.|
+
+Scientists stop testing when any of these steps produces evidence of noninvariance. Scientists would then examine the factor loadings and item intercepts on an item-by-item basis to determine which items are the main contributors toward measurement invariance.
+
+**Regression and Correlation Methods**: The lack of group differences in regressions or correlations has been cited as evidence that measurement bias, if it exists, does not have any practical impact. However, [Borsboom, Romejin, and Wicherts (2008)](https://pubmed.ncbi.nlm.nih.gov/18557679/), [Millsap (1997)](https://psycnet.apa.org/record/1998-04950-002), [Millsap (1998)](https://www.tandfonline.com/doi/abs/10.1207/s15327906mbr3303_5), [Millsap (2007)](https://link.springer.com/article/10.1007/s11336-007-9039-7) assert that a test may show identical regressions when it is used to predict a criterion measure across multiple populations, even though substantial measurement bias exists in the test. 
+
+#### Devil's Advocate
+Whatever measurement bias may be present has little impact on the use of tests in prediction or selection ([Neisser et al, 1996](https://psycnet.apa.org/record/1996-02655-001); [Sackett et al, 2008](https://psycnet.apa.org/record/2008-05553-001))
+
+#### Significance
+
+Aside from the arguments of fairness and equitable treatment, validation of measurement invariance ensures that comparisons across various groups of participants are both meaningful and valid. When a test item is found to function differently dependin on the examinee's group membership, questions are raised about what the item is actually measuring. Researchers can (i) get rid of the item or (ii) generate hypoteses about the sources of the bias and test those hypotheses by strategically selecting items to manifrest hypothesized biases.
+
+### Item Bias
+
+A good portion of literatured has used "differential item functioning" to refer to "item bias," an **older** term. The use of bias has a **negative connotation**, implying that the item may be unfair or prejudiced (Angoff, 1993).
+
+An item is **unbiased** in relation to groups if the probability of attaining any particular score on the item is the same for the two individuals. 
+
+### Differential Item Functioning (DIF)
+
+DIF is a **violation of the invariance assumption in IRT** and occurs when the probability of a positive response for examinees at the same ability level varies in different groups (e.g. age, ethnicity, gender, education) ([Battauz, 2017](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf); <a id="ref-columbia-uni-dif">[Columbia University Mailman School of Public Health, n.d.](#columbia-uni-dif)). DIF terminology confines itself to **statistical finding** of different performance for the **item** across groups. The contrast between DIF and item bias exists to separate the statistical pheomenon (group differences that remain after attempted matching) from questions about what the explanation for the phenomenon might be. The distinction between DIF and item bias separates a statistical finding from its interpretation.
+
+### DIF Types
+
+|   | Benign DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) | Adverse DIF [(Breslau et al, 2008)](https://pmc.ncbi.nlm.nih.gov/articles/PMC2748987/) |
+| - | ---------- | ----------- |
+| groups differ in their probabilities of endorsing at item because ... | the item taps a dimension of the underlying ability between groups | artifactual elements in the measurement process (e.g. different understandings of a word/phrase) |
+| reflects | real group differences in ability | biases in the measurement process |
+
+There are no unambiguous quantitative methods to distinguish benign from adverse DIF [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning). Qualitative methods, such as focus groups, interviews, and careful revies of items by content experts, can minimize the degree of differential item functioning [(Columbia University Mailman School of Public Health, n.d.)](https://www.publichealth.columbia.edu/research/population-health-methods/differential-item-functioning).
+
+### Methods of Quantifying DIF
+
+**Likelihood Ratio Test** The likelihood ratio test (LRT) was proposed by Thissen, Steinberg, and Wainer (1988, 1993) to determine statistical significant differential functioning. The most common approach to the LRT is the constrained baseline approach in which all other itema are used as anchor items (AOAA). The LRT compares 
+* the fit (i.e., the likelihood) of a compact model in which all item parametersare assumed to be equal across both groups with
+* the fit of an augmented model in which all item parameters are assumed to be equal for two group **except for one item**
+
+A significance test of DIF can be conducted by the $X^2$ statistic:
+
+$$
+X^2 = -2(\ln L_c - \ln L_A)
+$$
+
+where
+* $df$ is the degrees of freedom (i.e. number of item parameters)
+* $\ln L_C$ is the log likelihood of the compact model
+* $\ln L_A$ is the log likelihood of the argment model
+
+an item exhibits significant DIF when $X^2$ exceeds a critical value of the $\chi^2$ distribution at a prespecified level of Type I error. This means that the augmented model fits better than the compact model for the selected item, suggesting that it is better to use different parameters in both groups on that specific item.
+
+*Limitations*: To obtain the best results with LRT, the anchor items--items that are "invariant" across groups--should be non-significant differential functioning items across groups [(Cheung & Rensvold, 1999)](https://www.sciencedirect.com/science/article/pii/S0149206399800014). Unfortunately, with real data, such items are almost always unknown. A large drawback of the LRT and AOAA is inflated Type I error rates because items that are functioning differently across groups are also used as anchor items ([Kim and Cohen, (1995)](https://www.tandfonline.com/doi/abs/10.1207/s15324818ame0804_2); [Lautenschlager, Flaherty, and Park, (1994)](https://journals.sagepub.com/doi/10.1177/0013164494054001003); [Navas-Ara and Gomex-Benito (2002)](https://psycnet.apa.org/record/2002-00603-002)).
+
+*Selecting Anchor Items--Alternatives to the AOAA*: [Lopez Rivas et al (2009)](https://journals.sagepub.com/doi/10.1177/0146621608321760) recommended the "maxA5" approach; select five items with the argest $a$ parameters. [Woods (2009)](https://journals.sagepub.com/doi/10.1177/0146621607314044) suggested the rank-based strategy; an LRT is first conducted with an AOAA and items are ranged based on the $X^2$ value. Select 10-20% of items with the smallest $X^2$ value. [Egerbrink et al (2014)](https://pmc.ncbi.nlm.nih.gov/articles/PMC5965504/) recommended using [Woods (2009)](https://journals.sagepub.com/doi/10.1177/0146621607314044) rank-based strategy to select anchor items when investigating differential functioning in large samples. 
+
+**Mantel-Haenszel**
+
+*Limitations*
+
+**Item Probabilities**: If the parameter values or item response functions are identical in both populations, then the probabilities of responding to a category are the same and therefore the item is DIF-free [(Wells, 2021)](https://www.cambridge.org/core/books/abs/assessing-measurement-invariance-for-applied-research/methods-based-on-item-response-theory/AF361F6D9AE0D8FC860488D1A7617B49).
+
+**Lord's $\mathcal{X}^2$ test (Lord, 1980)**: Note that $^*$ refers to the scale linked version. Formulation follows [Battauz (2017)](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf)
 
 $$
 H_0: v_{j, \texttt{old}} = v^*_{j, \texttt{new}} \equiv \begin{pmatrix} a_{j, \texttt{old}} \\ b_{j, \texttt{old}} \\ c_{j, \texttt{old}} \end{pmatrix} = \begin{pmatrix}a^*_{j, \texttt{new}} \\ b^*_{j, \texttt{new}} \\ c^*_{j, \texttt{new}}\end{pmatrix}
@@ -366,11 +361,41 @@ $$
 \mathcal{X}_j^2 = \left(v_{k,\texttt{old}} - v^*_{j,\texttt{new}}\right)^T\left(\Sigma_{j, \texttt{old}}+\Sigma_{j, \texttt{new}}\right)^{-1}\left(v_{j,\texttt{old}}-v_{j, \texttt{new}}\right)
 $$ where $\Sigma_{j, \texttt{old}}$ and $\Sigma_{j, \texttt{new}}$ represent the estimate covariance matrix for $v_{j, \texttt{old}}$ and $v_{j, \texttt{new}}$ respectively.
 
+*Reviews*: [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true) compared Lord's $\mathcal{X}^2$, Raju's area measures and the likelihood ratio test on a university mathematics placement test and found that there was close agreement among the three DIF detection procedures. However, Lord's $\mathcal{X}^2$ statistic was more effective at detecting simulated DIF than the two Z-tests of Raju's area [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true). The Z test for the exact signed area was the least effective and was most likely to result in false negative errors [Kim and Cohen (2009)](https://www.tandfonline.com/doi/epdf/10.1207/s15324818ame0804_2?needAccess=true).
+
 ## NLP Applications
 
 [Lalor et al (2016)](https://aclanthology.org/D16-1062.pdf) questioned whether all items in a given test set are equal with regards to difficulty and discrimination power. They used Amazon Mechanical Turk works to annotate a sample of the Stanford Natural Language Inference Recognizing Textual Entailment. Researchers demonstrated IRT's application to evaluating NLP systems. They trained an IRT model on human data to compare NLP system performance with the performance in a human population.
 
 [Lalor et al (2020)](https://aclanthology.org/D18-1500.pdf) experimented on Natural Language Inference and Sentiment Analysis to show that the likelihood of answering a question correctly is impacted by the question difficulty. Logistic regression models used training set size and item difficulty as parameters to predict whether a deep neural network would label an item correctly. Neural model performance starts to look more human; as DNNs are trained with more data, "easy" examples are learned more quickly than hard examples.
+
+[Lior et al (2026)](https://arxiv.org/pdf/2606.15643) defined an IRT model suited for multilingual parallel benchmarks.
+
+For
+* a language-invariant discriminability component $a_j^{\text{base}}$
+* a language-*dependent* discriminability component $a_j^{\text{lang}}$ captures the separation introduced by the language-specific residual  $\epsilon_{i\ell}$
+* an LLM's (i.e., the test taker) language-specific ability residual $\left(\epsilon_i\right)_\ell$ captures how an LLM's proficiency in language $\ell$ differs from the overall ability $\theta_i$
+* $b_j$
+* an item's language specific difficulty deviation $d_{j\ell}$ lets the item's difficulty vary across languages, reflecting how translation can make the same question harder in different languages
+
+the response $r_{ij\ell} \in \\{0,1\\}$ of LLM $i$ on item $j$ in language $\ell$ is modeled as: $r_{ij\ell} \sim \operatorname{Bernoulli}(p_{ij\ell})$. The probability of correctness every (item, LLM, language) instance $p_{ij\ell}$ is modeled as
+
+$$
+\text{logit}(p_{ij\ell}) = \ln\left(\frac{p_{ij\ell}}{1-p_{ij\ell}}\right) = a_j^{\text{base}} \theta_i + a_j^{\text{lang}}\left(\epsilon_i\right)_\ell - (b_j + d_{j\ell})
+$$
+
+subject to the sum-to-zero constraints: $\sum_{\ell=1}^L d_{j\ell} = 0, \sum_{\ell=1}^L \left(\epsilon_j\right)_\ell=0$
+
+<img 
+    style="display: block; 
+           margin-left: auto;
+           margin-right: auto; 
+           width: 60%;"
+    src="/assets/imgs/using_irt_to_predict_unseen_instances.png"
+alt="using IRT to predict unseen instances">
+Prediction scores over unseen (item, LLM, language) instances, as a function of the fraction of seen instances. Two complementary metrics are shown: (a) Binary Cross Entropy (BCE) and (b) ROC-AUC. *Coupled-IRT*'s curve entirely overlaps with *Parallel-IRT* and so is not visible. The accuracy-based non-parametric baselines are computed directly on $\widehat Y\_{ij\ell}$. The baselines are: (1) per-item mean, $\widehat p\_{ij\ell} = \widehat Y\_{i} = \operatorname*{mean}\_{j,\ell} \widehat Y\_{ij\ell}$; (2) logit-additive model $\widehat p\_{ij\ell} = \widehat A\_i + \widehat A_{j\ell}$; and (3) logit-additive model with a per-(item-language) term $\widehat p_{ij\ell} = \widehat A\_i + \widehat A\_{j\ell} + \widehat A_{i\ell}$. 
+
+*Note that the figure above is taken from the original paper, which reversed the subject and item roles of $i$ and $j$.*
 
 ### Spurious Correlations
 Models can achieve strong results by simply using the hypothesis of a premise-hypothesis pair and ignoring the premise entirely ([Gururangan et al, 2018](https://aclanthology.org/N18-2017.pdf), [Tsuchiya (2018)](https://aclanthology.org/L18-1239.pdf), [Poliak et al (2018)](https://aclanthology.org/S18-2023.pdf))
@@ -379,7 +404,7 @@ Models can achieve strong results by simply using the hypothesis of a premise-hy
 
 Andersen (1970). [Asymptotic Properties pf Conditional Maximum-Likelihood Estimators](https://www.jstor.org/stable/2984535)
 
-<a id="battauz-2017"></a>Battauz (2017). [On Wald Tests for Differential item Functioning Detection](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf) [↩](#ref-battauz-2017)
+Battauz (2017). [On Wald Tests for Differential item Functioning Detection](https://dies.uniud.it/it/ricerca/allegati_wp/wp_2017-1/wp03_2017.pdf)
 
 Bolt. (2002) [A Monte Carlo Comparison of Parametric and Nonparametric Polytomous DIF Detection Methods](https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1502_01)
 
@@ -402,6 +427,8 @@ Kim and Lee (2004). [IRT Scale Linking Methods for Mixed-Format Tests](https://w
 Lalor et al (2016). [Building an Evaluation Scale using Item Response Theory](https://aclanthology.org/D16-1062.pdf)
 
 Lalor et al (2020). [Understanding Deep Learning Performance through an Examination of Test Set Difficulty: A Psychometric Case Study](https://aclanthology.org/D18-1500.pdf)
+
+Lior et al (2026). [Extending Item Response Theory for Efficient and Meaningful Multilingual Evaluation](https://arxiv.org/pdf/2606.15643)
 
 Lord (1980) Applications of item response theory to practical testing problems.
 
